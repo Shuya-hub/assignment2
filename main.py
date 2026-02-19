@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from groq import Groq
 
 def main():
+    # Load the API key from .env
     load_dotenv()
     api_key = os.getenv("GROQ_API_KEY")
     if not api_key:
@@ -11,6 +12,7 @@ def main():
 
     client = Groq(api_key=api_key)
     print("🌐 Chat interface to Groq. Type 'quit' to exit.")
+
     history = []
 
     while True:
@@ -18,15 +20,22 @@ def main():
         if user_input.lower() == "quit":
             print("👋 Goodbye!")
             break
+
+        # Add user input to history
         history.append({"role": "user", "content": user_input})
+
         try:
+            # Call Groq API
             completion = client.chat.completions.create(
                 messages=history,
                 model="openai/gpt-oss-20b",
             )
             assistant_text = completion.choices[0].message.content
             print(f"AI: {assistant_text}")
+
+            # Add assistant response to history
             history.append({"role": "assistant", "content": assistant_text})
+
         except Exception as e:
             print("❌ API call failed:", e)
 
