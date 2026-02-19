@@ -13,7 +13,11 @@ def main():
     client = Groq(api_key=api_key)
     print("🌐 Chat interface to Groq. Type 'quit' to exit.")
 
-    history = []
+    history = [{"role": "system", "content": (
+            "You are a confident, intelligent AI assistant who communicates with strong empathy. "
+            "Always provide thoughtful, insightful answers while understanding and respecting the user's feelings. "
+            "Respond clearly, confidently, and helpfully."
+        )}]
 
     while True:
         user_input = input("You: ").strip()
